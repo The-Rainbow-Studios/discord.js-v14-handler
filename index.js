@@ -75,12 +75,14 @@ client.aliases = new Discord.Collection();
 client.categories = require("fs").readdirSync(`./commands`);
 client.allEmojis = require("./botconfig/emojis.js");
 client.maps = new Map();
+client.embed = require("./botconfig/embed.js");
+client.settings = settings;
 
 client.setMaxListeners(100); require('events').defaultMaxListeners = 100;
 
 
 //Require the Handlers Add the antiCrash file too, if its enabled
-["events", "slashCommands", settings.antiCrash ? "antiCrash" : null]
+["events", "slashCommands", "messageCommands", settings.antiCrash ? "antiCrash" : null]
   .filter(Boolean)
   .forEach(h => {
     require(`./handlers/${h}`)(client);

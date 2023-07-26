@@ -42,38 +42,54 @@ module.exports = {
         createdTimestamp,
       } = interaction;
       const { guild } = member;
-	  await interaction.deferReply({ ephemeral: false }).catch((e) => {console.log(e)});
-	  const ping = Math.floor(createdTimestamp - interaction.createdTimestamp);
-	  const result = await mongoose.connection.db.admin().ping();
-	  const mongooseSeconds = (result.ok % 60000) / 1000;
-	  var pingSeconds = (ping % 60000) / 1000;
-	  var apiSeconds = (client.ws.ping % 60000) / 1000;
-	  interaction.editReply({
-		embeds: [
-			new EmbedBuilder()
-      .setTitle(`🏓 Pong!`)
-      .setColor(client.embed.color)
-      .addFields({
-        name: `📡 Websocket Latency`,
-        value: `>>> \`\`\`yml
-        ${ping}ms (${pingSeconds}s)\`\`\``,
-        inline: true,
-        }, 
-        {
-        name: `🛰 API Latency`,
-        value: `>>> \`\`\`yml
-        ${client.ws.ping}ms (${apiSeconds}s)\`\`\``,
-        inline: true,
-        },
-        {
-        name: `📂 Database Latency`,
-        value: `>>> \`\`\`yml
-        ${result.ok}ms (${mongooseSeconds}s)\`\`\``,
-        inline: false,
-        })
-
-		]
-	  });
+      const msg = await interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setDescription(`Calculating ping...`)
+            .setColor(client.embed.color),
+        ],
+      });
+      const ping = Math.floor(msg.createdTimestamp - interaction.createdTimestamp);
+      const result = await mongoose.connection.db?.admin().ping().catch(() => {});
+      let mongooseSeconds;
+      if (result) {
+          mongooseSeconds = (result.ok % 60000) / 1000;
+        }
+      var pingSeconds = (ping % 60000) / 1000;
+      var apiSeconds = (client.ws.ping % 60000) / 1000;
+      msg.edit({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle(`🏓 Pong!`)
+            .setColor(client.embed.color)
+            .addFields({
+              name: `📡 Websocket Latency`,
+              value: `>>> \`\`\`yml
+  ${ping}ms (${pingSeconds}s)\`\`\``,
+              inline: true,
+              }, 
+              {
+              name: `🛰 API Latency`,
+              value: `>>> \`\`\`yml
+  ${client.ws.ping}ms (${apiSeconds}s)\`\`\``,
+              inline: true,
+              },
+              mongooseSeconds ? {
+                name: `📂 Database Latency`,
+                value: `>>> \`\`\`yml
+  ${result.ok}ms (${mongooseSeconds}s)\`\`\``,
+                inline: false,
+                } : {
+                  name: `📂 Database Latency`,
+                  value: `>>> \`\`\`yml
+  Not Connected\`\`\``,
+                  inline: false,
+                }
+  
+              )
+    
+        ]
+      });
 
     } catch (e) {
       console.log(e);
@@ -96,8 +112,11 @@ module.exports = {
       ],
     });
     const ping = Math.floor(msg.createdTimestamp - message.createdTimestamp);
-    const result = await mongoose.connection.db.admin().ping();
-    const mongooseSeconds = (result.ok % 60000) / 1000;
+    const result = await mongoose.connection.db?.admin().ping().catch(() => {});
+    let mongooseSeconds;
+    if (result) {
+        mongooseSeconds = (result.ok % 60000) / 1000;
+      }
     var pingSeconds = (ping % 60000) / 1000;
     var apiSeconds = (client.ws.ping % 60000) / 1000;
     msg.edit({
@@ -108,21 +127,28 @@ module.exports = {
           .addFields({
             name: `📡 Websocket Latency`,
             value: `>>> \`\`\`yml
-            ${ping}ms (${pingSeconds}s)\`\`\``,
+${ping}ms (${pingSeconds}s)\`\`\``,
             inline: true,
             }, 
             {
             name: `🛰 API Latency`,
             value: `>>> \`\`\`yml
-            ${client.ws.ping}ms (${apiSeconds}s)\`\`\``,
+${client.ws.ping}ms (${apiSeconds}s)\`\`\``,
             inline: true,
             },
-            {
-            name: `📂 Database Latency`,
-            value: `>>> \`\`\`yml
-            ${result.ok}ms (${mongooseSeconds}s)\`\`\``,
-            inline: false,
-            })
+            mongooseSeconds ? {
+              name: `📂 Database Latency`,
+              value: `>>> \`\`\`yml
+${result.ok}ms (${mongooseSeconds}s)\`\`\``,
+              inline: false,
+              } : {
+                name: `📂 Database Latency`,
+                value: `>>> \`\`\`yml
+Not Connected\`\`\``,
+                inline: false,
+              }
+
+            )
   
       ]
     });

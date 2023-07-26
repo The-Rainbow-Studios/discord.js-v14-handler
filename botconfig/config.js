@@ -1,5 +1,6 @@
 module.exports = {
   "token": process.env.TOKEN,
+  "prefix": "!",
   "dbType": "", //quick.db OR MONGO
   "MONGOtype": "", //quickmongo OR MONGOOSE
   "MongoURL": "", //if dbType = MONGO, this is required else skip
