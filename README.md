@@ -12,7 +12,7 @@
 
 ```
 Credits to visa2code - https://youtube.com/@visa2code
-His discord server - https://discord.gg/rainbow-studios-free-codes-869916537610448897
+His discord server - https://discord.gg/e3CkRXy7HD
 ```
 
 > Any video not following this will be taken down!<br>
@@ -54,11 +54,11 @@ Tip: [How to get a mongodb URL?](https://www.youtube.com/watch?v=RQMWKRlMtH0 "Yo
   Now te final step. Run `npm install` and it will install all necessary packages. At last run `npm run start` or `node .`
   
   **And your bot should be up and running!**<br>
-**For Emojis [Click here](https://discord.gg/rainbow-studios-free-codes-869916537610448897 "Rainbow Studios")**
+**For Emojis [Click here](https://discord.gg/e3CkRXy7HD "Shadow Studios")**
 
 ## Problems? or cant host it?
 
-You can ask help in my support server by clicking [here](https://discord.gg/rainbow-studios-free-codes-869916537610448897 "Rainbow Studios")
+You can ask help in my support server by clicking [here](https://discord.gg/e3CkRXy7HD "Shadow Studios")
 
 ## Contributing
 
@@ -74,7 +74,7 @@ That's it Thanks for contributing!<br>
 
 # Support
 
-For support join our [discord support server](https://discord.gg/rainbow-studios-free-codes-869916537610448897).
+For support join our [discord support server](https://discord.gg/e3CkRXy7HD).
 
 # Authors
 
